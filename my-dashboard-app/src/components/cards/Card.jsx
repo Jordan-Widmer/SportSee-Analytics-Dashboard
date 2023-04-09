@@ -1,26 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import './Card.css';
+import { getUserKeyData } from '../../services/apiService';
+import UserModel from '../../models/UserModel';
 
-const Card = ({ icon, title, value, unit }) => {
+const Card = ({ userId }) => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedData = await getUserKeyData(userId);
+        const userModel = new UserModel(fetchedData);
+        setData(userModel.getKeyData());
+      } catch (error) {
+        console.error('Error fetching user key data:', error);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
   return (
-    <div className="card">
-      <img src={icon} alt={title} className="card-icon" />
-      <div className="card-content">
-        <h3 className="card-title">{title}</h3>
-        <p className="card-value">
-          {value} {unit}
-        </p>
-      </div>
+    <div>
+      {data ? (
+        <div>
+          {/* Affichez les informations clés ici */}
+          <h2>Calories: {data.calories}</h2>
+          <h2>Protéines: {data.proteins}</h2>
+          <h2>Glucides: {data.carbohydrates}</h2>
+          <h2>Lipides: {data.lipids}</h2>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 };
 
 Card.propTypes = {
-  icon: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired,
-  unit: PropTypes.string.isRequired,
+  userId: PropTypes.number.isRequired,
 };
 
 export default Card;
