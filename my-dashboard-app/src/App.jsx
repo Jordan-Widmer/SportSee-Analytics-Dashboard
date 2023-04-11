@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import UserProfile from './components/profile/UserProfile';
-import Card from "./components/cards/Card"
+import Card from "./components/cards/Card";
 import RadarChart from './components/charts/RadarChart';
 import RadialBarChart from './components/charts/RadialBarChart';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
   const userId = 18; // Replace with the ID of the user you want to display
   const [radialChartData, setRadialChartData] = useState([]);
+  const [radarChartData, setRadarChartData] = useState([]);
 
   useEffect(() => {
     fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
@@ -19,6 +19,16 @@ function App() {
         setRadialChartData([{ name: 'Completed', completion: completed }, { name: 'Not Completed', completion: notCompleted }]);
       })
       .catch((error) => console.log(error));
+
+    // Dummy data for RadarChart
+    const data = [
+      { name: 'Performance', value: 70 },
+      { name: 'Stability', value: 85 },
+      { name: 'Usability', value: 60 },
+      { name: 'Security', value: 95 },
+      { name: 'Scalability', value: 75 },
+    ];
+    setRadarChartData(data);
   }, [userId]);
 
   return (
@@ -33,7 +43,7 @@ function App() {
       </div>
       <div>
         <h2>Radar Chart</h2>
-        <RadarChart userId={userId} />
+        <RadarChart data={radarChartData} />
       </div>
       <div>
         <h2>Radial Bar Chart</h2>

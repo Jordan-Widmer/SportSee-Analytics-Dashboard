@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import Header from "../Header";
 import RadarChartComponent from "../charts/RadarChart";
 import RadialBarChartComponent from "../charts/RadialBarChart";
@@ -12,7 +13,7 @@ import {
   getUserDailyGoalCompletion,
 } from "../../services/apiService";
 
-const UserProfile = () => {
+const UserProfile = ({ userId }) => {
   const [userInfo, setUserInfo] = React.useState(null);
   const [userActivity, setUserActivity] = React.useState(null);
   const [userAverageSessions, setUserAverageSessions] = React.useState(null);
@@ -22,18 +23,18 @@ const UserProfile = () => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const userInfoData = await getUserInfo(1);
+      const userInfoData = await getUserInfo(userId);
       setUserInfo(userInfoData);
 
-      const userActivityData = await getUserActivity(1);
+      const userActivityData = await getUserActivity(userId);
       setUserActivity(userActivityData);
 
-      const userAverageSessionsData = await getUserAverageSessions(1);
+      const userAverageSessionsData = await getUserAverageSessions(userId);
       setUserAverageSessions(userAverageSessionsData);
 
-      const userPerformanceData = await getUserPerformance(1);
+      const userPerformanceData = await getUserPerformance(userId);
       const filteredPerformanceData = userPerformanceData.filter(
-        (performance) => performance.userId === 1
+        (performance) => performance.userId === userId
       );
       setUserPerformanceData(
         filteredPerformanceData.length
@@ -41,9 +42,9 @@ const UserProfile = () => {
           : [{ data: [] }]
       );
 
-      const userDailyGoalCompletionData = await getUserDailyGoalCompletion(1);
+      const userDailyGoalCompletionData = await getUserDailyGoalCompletion(userId);
       const filteredGoalCompletionData = userDailyGoalCompletionData.filter(
-        (goalCompletion) => goalCompletion.userId === 1
+        (goalCompletion) => goalCompletion.userId === userId
       );
       setUserDailyGoalCompletion(
         filteredGoalCompletionData.length
@@ -53,7 +54,7 @@ const UserProfile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   if (
     !userInfo ||
@@ -69,18 +70,18 @@ const UserProfile = () => {
     <div className="user-profile">
       <Header userInfo={userInfo} />
       <div className="charts-container">
-        <LineChart key="line-chart" userId={1} data={userActivity} />
+        <LineChart key="line-chart" userId={userId} data={userActivity} />
         {userDailyGoalCompletion[0].dailyGoals.length > 0 && (
           <RadialBarChartComponent
             key="radial-bar-chart"
-            userId={1}
+            userId={userId}
             data={userDailyGoalCompletion[0].dailyGoals}
           />
         )}
         {userPerformanceData[0].data.length > 0 && (
           <RadarChartComponent
             key="radar-chart"
-            userId={1}
+            userId={userId}
             data={userPerformanceData[0].data}
           />
         )}
@@ -90,13 +91,17 @@ const UserProfile = () => {
           <h2>Performance</h2>
           <PerformanceChart
             key="performance-chart"
-            userId={1}
+            userId={userId}
             data={userPerformanceData[0].data}
           />
         </div>
       </div>
     </div>
   );
+};
+
+UserProfile.propTypes = {
+  userId: PropTypes.number.isRequired,
 };
 
 export default UserProfile;

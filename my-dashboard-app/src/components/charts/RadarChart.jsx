@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  Legend,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Tooltip,
+} from 'recharts';
 
 const CustomRadar = ({ name, color, ...rest }) => {
   return (
@@ -39,7 +47,7 @@ const RadarChartComponent = ({ data = [] }) => {
       <PolarRadiusAxis angle={30} domain={[0, 100]} />
       <Legend />
       <CustomRadar name="Performance" color="#8884d8" />
-      <CustomTooltip />
+      <Tooltip content={<CustomTooltip />} />
     </RadarChart>
   );
 };
