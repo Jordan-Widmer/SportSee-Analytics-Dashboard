@@ -4,6 +4,7 @@ import LineChart from "./charts/LineChart";
 import RadarChart from "./charts/RadarChart";
 import RadialBarChart from "./charts/RadialBarChart";
 import UserProfile from "./profile/UserProfile";
+import Header from "./Header";
 
 export {
   Card,
@@ -12,4 +13,5 @@ export {
   RadarChart,
   RadialBarChart,
   UserProfile,
+  Header,
 };

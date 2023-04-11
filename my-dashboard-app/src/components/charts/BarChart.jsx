@@ -1,26 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { BarChart as RechartsBarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
-import { getUserActivity } from '../../services/apiService';
-import UserModel from '../../models/UserModel';
 
-const BarChart = ({ userId }) => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedData = await getUserActivity(userId);
-        const userModel = new UserModel(fetchedData);
-        setData(userModel.getActivityData());
-      } catch (error) {
-        console.error('Error fetching user activity data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
+const BarChart = ({ data }) => {
   return (
     <div>
       {data ? (
@@ -40,7 +22,7 @@ const BarChart = ({ userId }) => {
 };
 
 BarChart.propTypes = {
-  userId: PropTypes.number.isRequired,
+  data: PropTypes.array,
 };
 
 export default BarChart;

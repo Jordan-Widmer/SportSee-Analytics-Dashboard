@@ -1,32 +1,100 @@
-import React, { useEffect, useState } from 'react';
-import { getUserInfo } from '../../services/apiService';
+import React from "react";
+import Header from "../Header";
+import RadarChartComponent from "../charts/RadarChart";
+import RadialBarChartComponent from "../charts/RadialBarChart";
+import LineChart from "../charts/LineChart";
+import PerformanceChart from "../charts/PerformanceChart";
+import {
+  getUserInfo,
+  getUserActivity,
+  getUserAverageSessions,
+  getUserPerformance,
+  getUserDailyGoalCompletion,
+} from "../../services/apiService";
 
-const UserProfile = ({ userId }) => {
-  const [userInfo, setUserInfo] = useState(null);
+const UserProfile = () => {
+  const [userInfo, setUserInfo] = React.useState(null);
+  const [userActivity, setUserActivity] = React.useState(null);
+  const [userAverageSessions, setUserAverageSessions] = React.useState(null);
+  const [userPerformanceData, setUserPerformanceData] = React.useState(null);
+  const [userDailyGoalCompletion, setUserDailyGoalCompletion] =
+    React.useState(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchData = async () => {
-      try {
-        const data = await getUserInfo(userId);
-        setUserInfo(data);
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
+      const userInfoData = await getUserInfo(1);
+      setUserInfo(userInfoData);
+
+      const userActivityData = await getUserActivity(1);
+      setUserActivity(userActivityData);
+
+      const userAverageSessionsData = await getUserAverageSessions(1);
+      setUserAverageSessions(userAverageSessionsData);
+
+      const userPerformanceData = await getUserPerformance(1);
+      const filteredPerformanceData = userPerformanceData.filter(
+        (performance) => performance.userId === 1
+      );
+      setUserPerformanceData(
+        filteredPerformanceData.length
+          ? filteredPerformanceData
+          : [{ data: [] }]
+      );
+
+      const userDailyGoalCompletionData = await getUserDailyGoalCompletion(1);
+      const filteredGoalCompletionData = userDailyGoalCompletionData.filter(
+        (goalCompletion) => goalCompletion.userId === 1
+      );
+      setUserDailyGoalCompletion(
+        filteredGoalCompletionData.length
+          ? filteredGoalCompletionData
+          : [{ dailyGoals: [] }]
+      );
     };
 
     fetchData();
-  }, [userId]);
+  }, []);
+
+  if (
+    !userInfo ||
+    !userActivity ||
+    !userAverageSessions ||
+    !userDailyGoalCompletion ||
+    !userPerformanceData
+  ) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      {userInfo ? (
-        <div>
-          <h1>{userInfo.firstName}</h1>
-          {/* Affichez d'autres informations sur l'utilisateur ici */}
+    <div className="user-profile">
+      <Header userInfo={userInfo} />
+      <div className="charts-container">
+        <LineChart key="line-chart" userId={1} data={userActivity} />
+        {userDailyGoalCompletion[0].dailyGoals.length > 0 && (
+          <RadialBarChartComponent
+            key="radial-bar-chart"
+            userId={1}
+            data={userDailyGoalCompletion[0].dailyGoals}
+          />
+        )}
+        {userPerformanceData[0].data.length > 0 && (
+          <RadarChartComponent
+            key="radar-chart"
+            userId={1}
+            data={userPerformanceData[0].data}
+          />
+        )}
+      </div>
+      <div className="performance-container">
+        <div className="performance-container">
+          <h2>Performance</h2>
+          <PerformanceChart
+            key="performance-chart"
+            userId={1}
+            data={userPerformanceData[0].data}
+          />
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      </div>
     </div>
   );
 };

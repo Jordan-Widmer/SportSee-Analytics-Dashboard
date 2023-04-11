@@ -1,46 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { RadarChart as RechartsRadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip, Legend } from 'recharts';
-import { getUserPerformance } from '../../services/apiService';
-import UserModel from '../../models/UserModel';
+import { Radar, RadarChart, PolarGrid, Legend, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
-const RadarChart = ({ userId }) => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedData = await getUserPerformance(userId);
-        const userModel = new UserModel(fetchedData);
-        setData(userModel.getPerformanceData());
-      } catch (error) {
-        console.error('Error fetching user performance data:', error);
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
+const CustomRadar = ({ name, color, ...rest }) => {
   return (
-    <div>
-      {data ? (
-        <RechartsRadarChart width={500} height={300} data={data}>
-          <PolarGrid />
-          <PolarAngleAxis dataKey="activityType" />
-          <PolarRadiusAxis />
-          <Tooltip />
-          <Legend />
-          <Radar name="Performance" dataKey="score" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} />
-        </RechartsRadarChart>
-      ) : (
-        <p>Loading...</p>
-      )}
+    <Radar name={name} dataKey="value" stroke={color} fill={color} fillOpacity={0.6} {...rest} />
+  );
+};
+
+CustomRadar.propTypes = {
+  name: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+};
+
+const CustomTooltip = ({ payload, label, ...props }) => {
+  return (
+    <div className="custom-tooltip">
+      <p className="label">{label}</p>
+      {payload.map((entry, index) => (
+        <p key={`item-${index}`} style={{ color: entry.color }}>
+          {`${entry.name}: ${entry.value}`}
+        </p>
+      ))}
     </div>
   );
 };
 
-RadarChart.propTypes = {
-  userId: PropTypes.number.isRequired,
+CustomTooltip.propTypes = {
+  payload: PropTypes.array,
+  label: PropTypes.string,
 };
 
-export default RadarChart;
+const RadarChartComponent = ({ data = [] }) => {
+  return (
+    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+      <PolarGrid />
+      <PolarAngleAxis dataKey="name" />
+      <PolarRadiusAxis angle={30} domain={[0, 100]} />
+      <Legend />
+      <CustomRadar name="Performance" color="#8884d8" />
+      <CustomTooltip />
+    </RadarChart>
+  );
+};
+
+RadarChartComponent.propTypes = {
+  data: PropTypes.array,
+};
+
+export default RadarChartComponent;
