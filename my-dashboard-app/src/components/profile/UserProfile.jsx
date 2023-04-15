@@ -23,34 +23,42 @@ const UserProfile = ({ userId }) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const userInfoData = await getUserInfo(userId);
-      setUserInfo(userInfoData);
+      try {
+        const userInfoData = await getUserInfo(userId);
+        setUserInfo(userInfoData);
 
-      const userActivityData = await getUserActivity(userId);
-      setUserActivity(userActivityData);
+        const userActivityData = await getUserActivity(userId);
+        setUserActivity(userActivityData);
 
-      const userAverageSessionsData = await getUserAverageSessions(userId);
-      setUserAverageSessions(userAverageSessionsData);
+        const userAverageSessionsData = await getUserAverageSessions(userId);
+        setUserAverageSessions(userAverageSessionsData);
 
-      const userPerformanceData = await getUserPerformance(userId);
-      const filteredPerformanceData = userPerformanceData.filter(
-        (performance) => performance.userId === userId
-      );
-      setUserPerformanceData(
-        filteredPerformanceData.length
-          ? filteredPerformanceData
-          : [{ data: [] }]
-      );
+        const userPerformanceData = await getUserPerformance(userId);
+        if (Array.isArray(userPerformanceData)) {
+          const filteredPerformanceData = userPerformanceData.filter(
+            (performance) => performance.userId === userId
+          );
+          setUserPerformanceData(
+            filteredPerformanceData.length
+              ? filteredPerformanceData
+              : [{ data: [] }]
+          );
+        }
 
-      const userDailyGoalCompletionData = await getUserDailyGoalCompletion(userId);
-      const filteredGoalCompletionData = userDailyGoalCompletionData.filter(
-        (goalCompletion) => goalCompletion.userId === userId
-      );
-      setUserDailyGoalCompletion(
-        filteredGoalCompletionData.length
-          ? filteredGoalCompletionData
-          : [{ dailyGoals: [] }]
-      );
+        const userDailyGoalCompletionData = await getUserDailyGoalCompletion(userId);
+        if (Array.isArray(userDailyGoalCompletionData)) {
+          const filteredGoalCompletionData = userDailyGoalCompletionData.filter(
+            (goalCompletion) => goalCompletion.userId === userId
+          );
+          setUserDailyGoalCompletion(
+            filteredGoalCompletionData.length
+              ? filteredGoalCompletionData
+              : [{ dailyGoals: [] }]
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
     fetchData();

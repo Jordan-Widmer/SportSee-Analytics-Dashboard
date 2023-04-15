@@ -8,14 +8,18 @@ const RadialBarChartComponent = ({ userId }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userDailyGoalCompletionData = await getUserDailyGoalCompletion(userId);
-      const filteredData = userDailyGoalCompletionData.filter(
-        (goalCompletion) => goalCompletion.userId === userId
-      );
-      const dailyGoals = filteredData.length ? filteredData[0].dailyGoals : [];
-      const completedCount = dailyGoals.filter((item) => item.goalCompleted).length;
-      const notCompletedCount = dailyGoals.length - completedCount;
-      setData([{ name: 'Completed', completion: completedCount }, { name: 'Not Completed', completion: notCompletedCount }]);
+      try {
+        const response = await getUserDailyGoalCompletion(userId);
+        if (response && response.data) {
+          const filteredData = response.data.filter(goalCompletion => goalCompletion.userId === userId);
+          const dailyGoals = filteredData.length ? filteredData[0].dailyGoals : [];
+          const completedCount = dailyGoals.filter(item => item.goalCompleted).length;
+          const notCompletedCount = dailyGoals.length - completedCount;
+          setData([{ name: 'Completed', completion: completedCount }, { name: 'Not Completed', completion: notCompletedCount }]);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
