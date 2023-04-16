@@ -12,7 +12,7 @@ const BarChart = ({ data }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="calories" fill="#8884d8" />
+          <Bar dataKey="value" fill="#8884d8" />
         </RechartsBarChart>
       ) : (
         <p>Loading...</p>

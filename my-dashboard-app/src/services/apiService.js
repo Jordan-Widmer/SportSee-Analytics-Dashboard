@@ -3,8 +3,18 @@ import axios from 'axios';
 const apiURL = 'http://localhost:3000'; // Remplacez par l'URL de votre backend
 
 export const getUserInfo = async (userId) => {
-  const response = await axios.get(`${apiURL}/user/${userId}`);
-  return response.data;
+  try {
+    const response = await axios.get(`${apiURL}/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      console.error("User not found");
+      return null;
+    } else {
+      console.error("Error fetching user info:", error);
+      return null;
+    }
+  }
 };
 
 export const getUserKeyData = async (userId) => {
@@ -29,10 +39,11 @@ export const getUserPerformance = async (userId) => {
 
 export const getUserDailyGoalCompletion = async (userId) => {
   try {
-    const response = await axios.get(`/user/${userId}/daily-goal-completion`);
+    const response = await axios.get(`${apiURL}/user/${userId}/daily-goal-completion`);
     return response.data;
   } catch (error) {
     console.error('Error fetching user daily goal completion data:', error);
     return null;
   }
 };
+

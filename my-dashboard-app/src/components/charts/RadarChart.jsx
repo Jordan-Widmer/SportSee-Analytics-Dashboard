@@ -21,24 +21,6 @@ CustomRadar.propTypes = {
   color: PropTypes.string.isRequired,
 };
 
-const CustomTooltip = ({ payload, label, ...props }) => {
-  return (
-    <div className="custom-tooltip">
-      <p className="label">{label}</p>
-      {payload.map((entry, index) => (
-        <p key={`item-${index}`} style={{ color: entry.color }}>
-          {`${entry.name}: ${entry.value}`}
-        </p>
-      ))}
-    </div>
-  );
-};
-
-CustomTooltip.propTypes = {
-  payload: PropTypes.array,
-  label: PropTypes.string,
-};
-
 const RadarChartComponent = ({ data = [] }) => {
   return (
     <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
@@ -47,7 +29,7 @@ const RadarChartComponent = ({ data = [] }) => {
       <PolarRadiusAxis angle={30} domain={[0, 100]} />
       <Legend />
       <CustomRadar name="Performance" color="#8884d8" />
-      <Tooltip content={<CustomTooltip />} />
+      <Tooltip />
     </RadarChart>
   );
 };

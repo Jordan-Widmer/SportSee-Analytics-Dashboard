@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { LineChart as RechartsLineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
 
-const LineChart = ({ userId, data }) => {
+const LineChart = ({ data }) => {
   return (
     <div>
       {data && data.length > 0 ? (
@@ -12,7 +12,7 @@ const LineChart = ({ userId, data }) => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="avgDuration" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="value" stroke="#8884d8" activeDot={{ r: 8 }} />
         </RechartsLineChart>
       ) : (
         <p>Loading...</p>
@@ -22,7 +22,6 @@ const LineChart = ({ userId, data }) => {
 };
 
 LineChart.propTypes = {
-  userId: PropTypes.number.isRequired,
   data: PropTypes.array.isRequired,
 };
 
