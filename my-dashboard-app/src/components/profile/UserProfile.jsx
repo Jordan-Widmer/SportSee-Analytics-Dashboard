@@ -47,12 +47,14 @@ const UserProfile = ({ userId }) => {
     fetchData();
   }, [userId]);
 
+  console.log('goalCompletionData:', goalCompletionData);
+
   return (
     <>
       <Header userInfo={userInfo} />
-      {userActivity ? <RadarChartComponent data={userActivity} /> : <p>Loading user activity...</p>}
-      {userDailyGoalCompletion ? <RadialBarChartComponent data={userDailyGoalCompletion} /> : <p>Loading daily goal completion...</p>}
-      {userAverageSessions ? <LineChart data={userAverageSessions} /> : <p>Loading average sessions...</p>}
+      {userActivity ? <RadarChartComponent data={Object.values(userActivity)} /> : <p>Loading user activity...</p>}
+      {goalCompletionData ? <RadialBarChartComponent data={goalCompletionData} /> : <p>Loading daily goal completion...</p>}
+      {userAverageSessions ? <LineChart data={Object.values(userAverageSessions)} /> : <p>Loading average sessions...</p>}
       {userPerformanceData ? <PerformanceChart data={userPerformanceData} /> : <p>Loading performance data...</p>}
     </>
   );

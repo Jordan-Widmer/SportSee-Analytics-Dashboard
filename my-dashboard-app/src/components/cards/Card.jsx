@@ -8,6 +8,7 @@ const Card = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       const keyData = await getUserKeyData(userId);
+      console.log("Key Data:", keyData);
       setData(keyData);
     };
     fetchData();

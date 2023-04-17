@@ -19,7 +19,8 @@ export const getUserInfo = async (userId) => {
 
 export const getUserKeyData = async (userId) => {
   const userInfo = await getUserInfo(userId);
-  return userInfo.keyData;
+  console.log('userInfo:', userInfo);
+  return userInfo.data.keyData;
 };
 
 export const getUserActivity = async (userId) => {
@@ -40,7 +41,20 @@ export const getUserPerformance = async (userId) => {
 export const getUserDailyGoalCompletion = async (userId) => {
   try {
     const response = await axios.get(`${apiURL}/user/${userId}/daily-goal-completion`);
-    return response.data;
+    const dailyGoals = response.data.data.dailyGoals;
+
+    console.log('Fetched dailyGoals:', dailyGoals);
+
+    const formattedData = dailyGoals.map((goal, index) => {
+      const formattedGoal = {
+        name: `Day ${index + 1}`,
+        value: goal.goalCompleted ? 100 : 0,
+      };
+      console.log('Formatted goal:', formattedGoal);
+      return formattedGoal;
+    });
+
+    return formattedData;
   } catch (error) {
     console.error('Error fetching user daily goal completion data:', error);
     return null;
