@@ -28,10 +28,27 @@ export const getUserActivity = async (userId) => {
   return response.data;
 };
 
-export const getUserAverageSessions = async (userId) => {
-  const response = await axios.get(`${apiURL}/user/${userId}/average-sessions`);
-  return response.data;
-};
+export async function getUserAverageSessions(userId) {
+  try {
+    const response = await axios.get(`${apiURL}/user/${userId}/average-sessions`);
+    const sessionsData = response.data.sessions;
+
+    if (!sessionsData || !Array.isArray(sessionsData)) {
+      console.error("Error fetching user average sessions: sessions data is missing");
+      return [];
+    }
+
+    const data = sessionsData.map(session => ({
+      name: `Day ${session.day}`,
+      value: session.sessionLength,
+    }));
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching user average sessions:', error);
+    return [];
+  }
+}
 
 export const getUserPerformance = async (userId) => {
   const response = await axios.get(`${apiURL}/user/${userId}/performance`);

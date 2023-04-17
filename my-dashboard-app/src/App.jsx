@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import UserProfile from './components/profile/UserProfile';
+import LineChart from './components/charts/LineChart';
 import Card from "./components/cards/Card";
 import RadarChart from './components/charts/RadarChart';
 import RadialBarChart from './components/charts/RadialBarChart';
+import SecondRadialBarChart from './components/charts/SecondRadialBarChart';
 import './App.css';
 
 function App() {
@@ -45,9 +47,14 @@ function App() {
         <h2>Radar Chart</h2>
         <RadarChart data={radarChartData} />
       </div>
+      {/* Temporarily remove the first Radial Bar Chart */}
+      {/* <div>
+        <h2>First Radial Bar Chart</h2>
+        <RadialBarChart data={radialChartData} />
+      </div> */}
       <div>
-        <h2>Radial Bar Chart</h2>
-        <RadialBarChart userId={userId} data={radialChartData} />
+        <h2>Second Radial Bar Chart</h2>
+        <SecondRadialBarChart data={radialChartData} />
       </div>
     </div>
   );
