@@ -1,41 +1,57 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useRef, useEffect } from "react";
 import {
-  Radar,
   RadarChart,
   PolarGrid,
-  Legend,
   PolarAngleAxis,
   PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer,
+  Legend,
   Tooltip,
-} from 'recharts';
+} from "recharts";
 
-const CustomRadar = ({ name, color, ...rest }) => {
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${label}: ${payload[0].value}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+const RadarChartComponent = ({ data }) => {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (chartRef.current) {
+      console.log("RadarChart container dimensions:", chartRef.current.getBoundingClientRect());
+    }
+  }, [chartRef]);
+
+  console.log("RadarChart data:", data);
+
   return (
-    <Radar name={name} dataKey="value" stroke={color} fill={color} fillOpacity={0.6} {...rest} />
+    <div ref={chartRef} style={{ width: "100%", height: 300 }}>
+      <ResponsiveContainer>
+        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+          <PolarGrid />
+          <PolarAngleAxis dataKey="subject" stroke="#000" />
+          <PolarRadiusAxis angle={30} domain={[0, 'auto']} tick={false} />
+          <Radar
+            name="User Activity"
+            dataKey="A"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.6}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+        </RadarChart>
+      </ResponsiveContainer>
+    </div>
   );
-};
-
-CustomRadar.propTypes = {
-  name: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-};
-
-const RadarChartComponent = ({ data = [] }) => {
-  return (
-    <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
-      <PolarGrid />
-      <PolarAngleAxis dataKey="name" />
-      <PolarRadiusAxis angle={30} domain={[0, 100]} />
-      <Legend />
-      <CustomRadar name="Performance" color="#8884d8" />
-      <Tooltip />
-    </RadarChart>
-  );
-};
-
-RadarChartComponent.propTypes = {
-  data: PropTypes.array,
 };
 
 export default RadarChartComponent;

@@ -31,7 +31,9 @@ export const getUserActivity = async (userId) => {
 export async function getUserAverageSessions(userId) {
   try {
     const response = await axios.get(`${apiURL}/user/${userId}/average-sessions`);
+    console.log('response:', response);
     const sessionsData = response.data.sessions;
+    console.log('sessionsData:', sessionsData);
 
     if (!sessionsData || !Array.isArray(sessionsData)) {
       console.error("Error fetching user average sessions: sessions data is missing");

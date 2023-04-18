@@ -5,49 +5,23 @@ import RadarChartComponent from "../charts/RadarChart";
 import RadialBarChartComponent from "../charts/RadialBarChart";
 import LineChart from "../charts/LineChart";
 import PerformanceChart from "../charts/PerformanceChart";
-import {
-  getUserInfo,
-  getUserActivity,
-  getUserAverageSessions,
-  getUserPerformance,
-  getUserDailyGoalCompletion,
-} from "../../services/apiService";
+import useFetchUserData from "../../hooks/useFetchUserData";
 
 const UserProfile = ({ userId }) => {
-  const [userInfo, setUserInfo] = React.useState(null);
-  const [userActivity, setUserActivity] = React.useState(null);
-  const [userAverageSessions, setUserAverageSessions] = React.useState(null);
-  const [userPerformanceData, setUserPerformanceData] = React.useState(null);
-  const [userDailyGoalCompletion, setUserDailyGoalCompletion] = React.useState(null);
-  const [goalCompletionData, setGoalCompletionData] = React.useState([]);
+  const {
+    userInfo,
+    userActivity,
+    userAverageSessions,
+    userPerformanceData,
+    goalCompletionData,
+  } = useFetchUserData(userId);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userInfoData = await getUserInfo(userId);
-        setUserInfo(userInfoData);
-
-        const userActivityData = await getUserActivity(userId);
-        setUserActivity(userActivityData);
-
-        const userAverageSessionsData = await getUserAverageSessions(userId);
-        setUserAverageSessions(userAverageSessionsData);
-
-        const userPerformanceData = await getUserPerformance(userId);
-        setUserPerformanceData(userPerformanceData);
-
-        const goalCompletionData = await getUserDailyGoalCompletion(userId);
-        setGoalCompletionData(goalCompletionData);
-      } catch (error) {
-        console.error('Error fetching user daily goal completion data:', error);
-        setGoalCompletionData([]); // Set data to an empty array in case of error
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-  console.log('goalCompletionData:', goalCompletionData);
+  const transformedPerformanceData = userPerformanceData
+    ? userPerformanceData.data.map((item, index) => ({
+        name: userPerformanceData.kind.name + (index + 1),
+        value: item.value,
+      }))
+    : null;
 
   return (
     <>
@@ -55,7 +29,7 @@ const UserProfile = ({ userId }) => {
       {userActivity ? <RadarChartComponent data={Object.values(userActivity)} /> : <p>Loading user activity...</p>}
       {goalCompletionData ? <RadialBarChartComponent data={goalCompletionData} /> : <p>Loading daily goal completion...</p>}
       {userAverageSessions ? <LineChart data={userAverageSessions} /> : <p>Loading average sessions...</p>}
-      {userPerformanceData ? <PerformanceChart data={userPerformanceData} /> : <p>Loading performance data...</p>}
+      {transformedPerformanceData ? <PerformanceChart data={transformedPerformanceData} /> : <p>Loading performance data...</p>}
     </>
   );
 };

@@ -24,11 +24,11 @@ function App() {
 
     // Dummy data for RadarChart
     const data = [
-      { name: 'Performance', value: 70 },
-      { name: 'Stability', value: 85 },
-      { name: 'Usability', value: 60 },
-      { name: 'Security', value: 95 },
-      { name: 'Scalability', value: 75 },
+      { subject: "Performance", A: 70 },
+      { subject: "Stability", A: 85 },
+      { subject: "Usability", A: 60 },
+      { subject: "Security", A: 95 },
+      { subject: "Scalability", A: 75 },
     ];
     setRadarChartData(data);
   }, [userId]);
