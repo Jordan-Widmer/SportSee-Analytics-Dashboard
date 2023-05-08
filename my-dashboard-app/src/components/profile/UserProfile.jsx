@@ -1,3 +1,4 @@
+// UserProfile.js
 import React from "react";
 import PropTypes from 'prop-types';
 import Header from "../Header";
@@ -25,7 +26,7 @@ const UserProfile = ({ userId }) => {
 
   return (
     <>
-      <Header userInfo={userInfo} />
+      <Header userInfo={userInfo || {}} /> {/* Updated Header component usage */}
       {userActivity ? <BarChartComponent data={Object.values(userActivity)} /> : <p>Loading user activity...</p>}
       {goalCompletionData ? <RadialBarChartComponent data={goalCompletionData} /> : <p>Loading daily goal completion...</p>}
       {userAverageSessions ? <LineChart data={userAverageSessions} /> : <p>Loading average sessions...</p>}
