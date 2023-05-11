@@ -1,10 +1,14 @@
-import { useState, useEffect } from 'react';
-import UserProfile from './components/profile/UserProfile';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Header from './components/header/Header';
+import Sidebar from './components/aside/Sidebar';
+import BarChartComponent from './components/charts/BarChartComponent';
+import RadialBarChartComponent from './components/charts/RadialBarChart';
 import LineChart from './components/charts/LineChart';
+import PerformanceChart from './components/charts/RadarChart';
+import useFetchUserData from './hooks/useFetchUserData';
 import Card from "./components/cards/Card";
-import RadialBarChart from './components/charts/RadialBarChart';
-import SecondRadialBarChart from './components/charts/SecondRadialBarChart';
-import './App.css';
+import './index.css';
 
 function App() {
   const userId = 18; // Replace with the ID of the user you want to display
@@ -20,22 +24,39 @@ function App() {
       })
       .catch((error) => console.log(error));
 
-}, [userId]);
+  }, [userId]);
+
+  const {
+    userInfo,
+    userActivity,
+    userAverageSessions,
+    userPerformanceData,
+    goalCompletionData,
+  } = useFetchUserData(userId);
+
+  const { firstName, lastName, age } = userInfo?.data?.userInfos || {};
+
+  const transformedPerformanceData = userPerformanceData
+    ? userPerformanceData.data.map((item, index) => ({
+        name: userPerformanceData.kind.name + (index + 1),
+        value: item.value,
+      }))
+    : null;
 
   return (
     <div className="App">
-      <div>
-        <h2>User Profile</h2>
-        <UserProfile userId={userId} />
-      </div>
-      <div>
-        <h2>Card</h2>
-        <Card userId={userId} />
+      <Header />
+      <div className="contentWrapper">
+        <Sidebar />
+        <div>
+          {userActivity ? <BarChartComponent data={Object.values(userActivity)} /> : <p>Loading user activity...</p>}
+          {goalCompletionData ? <RadialBarChartComponent data={goalCompletionData} /> : <p>Loading daily goal completion...</p>}
+          {userAverageSessions ? <LineChart data={userAverageSessions} /> : <p>Loading average sessions...</p>}
+          {transformedPerformanceData ? <PerformanceChart data={transformedPerformanceData} /> : <p>Loading performance data...</p>}
+          <h2>Card</h2>
+          <Card userId={userId} />
+        </div>
       </div>    
-      <div>
-        <h2>Second Radial Bar Chart</h2>
-        <SecondRadialBarChart data={radialChartData} />
-      </div>
     </div>
   );
 }

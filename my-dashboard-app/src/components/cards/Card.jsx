@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { getUserKeyData } from '../../services/apiService';
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { getUserKeyData } from "../../services/apiService";
 
 const Card = ({ userId }) => {
   const [data, setData] = useState(null);
