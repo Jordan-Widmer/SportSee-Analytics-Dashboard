@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   getUserInfo,
   getUserActivity,
   getUserAverageSessions,
   getUserPerformance,
   getUserDailyGoalCompletion,
-} from '../services/apiService';
+} from "../services/apiService";
 
 const useFetchUserData = (userId) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -33,7 +33,7 @@ const useFetchUserData = (userId) => {
         const goalCompletionData = await getUserDailyGoalCompletion(userId);
         setGoalCompletionData(goalCompletionData);
       } catch (error) {
-        console.error('Error fetching user daily goal completion data:', error);
+        console.error("Error fetching user daily goal completion data:", error);
         setGoalCompletionData([]); // Set data to an empty array in case of error
       }
     };

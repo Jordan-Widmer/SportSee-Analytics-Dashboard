@@ -26,7 +26,10 @@ const BarChartComponent = ({ data }) => {
 
   useEffect(() => {
     if (chartRef.current) {
-      console.log("BarChart container dimensions:", chartRef.current.getBoundingClientRect());
+      console.log(
+        "BarChart container dimensions:",
+        chartRef.current.getBoundingClientRect()
+      );
     }
   }, [chartRef]);
 
@@ -36,7 +39,7 @@ const BarChartComponent = ({ data }) => {
     <div ref={chartRef} style={{ width: "100%", height: 300 }}>
       <ResponsiveContainer>
         <BarChart
-          data={data}
+          data={data[0].sessions}
           margin={{
             top: 20,
             right: 30,
@@ -50,7 +53,11 @@ const BarChartComponent = ({ data }) => {
           <Tooltip content={<CustomTooltip />} />
           <Legend />
           <Bar dataKey="kilogram" name="Poids (kg)" fill="#8884d8" />
-          <Bar dataKey="calories" name="Calories brûlées (kCal)" fill="#82ca9d" />
+          <Bar
+            dataKey="calories"
+            name="Calories brûlées (kCal)"
+            fill="#82ca9d"
+          />
         </BarChart>
       </ResponsiveContainer>
     </div>

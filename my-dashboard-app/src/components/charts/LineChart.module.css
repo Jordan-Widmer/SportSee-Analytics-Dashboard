@@ -1,0 +1,53 @@
+.linechartContainer {
+    background: #ff0000;
+    width: 258px;
+    height: 263px;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
+  
+  .linechartContainer h3 {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+  
+    left: 25px;
+    top: 10px;
+  
+    color: white;
+    opacity: 0.1;
+  
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    width: 147px;
+    position: absolute;
+  }
+  
+  .custom-tooltip {
+    height: 25px;
+    background-color: white;
+    padding: 2px 1px;
+  
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 24px;
+  
+    text-align: center;
+  
+    color: #000000;
+  
+    border-radius: 0px;
+    border: none;
+  }
+  
+  .custom-tooltip p {
+    margin: 10px;
+  }
+  
