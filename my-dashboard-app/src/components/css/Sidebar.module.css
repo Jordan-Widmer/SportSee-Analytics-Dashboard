@@ -1,0 +1,38 @@
+.sidebarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 117px;
+  height: 100vh;
+  justify-content: space-evenly;
+  background-color: black;
+}
+
+.sidebarContainer p {
+  transform: rotate(90deg);
+  width: 250px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
+  color: #ffffff;
+}
+
+.iconsList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iconsList span {
+  background: #ffffff;
+  border-radius: 6px;
+  color: red;
+  width: 64px;
+  height: 64px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 25px;
+}

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import styles from "./LineChart.module.css";
-import {
-  LineChart as RechartsLineChart,
-  XAxis,
-  Tooltip,
-  Line,
-} from "recharts";
+import styles from "../css/LineChart.module.css";
+import { LineChart as RechartsLineChart, XAxis, Tooltip, Line } from "recharts";
 
 const LineChart = ({ data }) => {
   const [processedData, setProcessedData] = useState([]);

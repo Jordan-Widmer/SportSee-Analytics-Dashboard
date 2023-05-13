@@ -5,7 +5,7 @@ import {
   RadialBar,
   Tooltip,
 } from "recharts";
-import styles from "./RadialBartChart.module.css";
+import styles from "../css/RadialBartChart.module.css";
 
 const RadialBarChartComponent = ({ data }) => {
   return (

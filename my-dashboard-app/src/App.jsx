@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Header from "./components/header/Header";
-import Sidebar from "./components/aside/Sidebar";
-import BarChartComponent from "./components/charts/BarChart";
-import RadialBarChartComponent from "./components/charts/RadialBartChart";
-import LineChart from "./components/charts/LineChart";
-import PerformanceChart from "./components/charts/RadarChart";
+import Header from "./components/interfaces/Header";
+import Sidebar from "./components/interfaces/Sidebar";
+import BarChartComponent from "./components/utils/BarChart";
+import RadialBarChartComponent from "./components/utils/RadialBartChart";
+import LineChart from "./components/utils/LineChart";
+import PerformanceChart from "./components/utils/RadarChart";
 import useFetchUserData from "./hooks/useFetchUserData";
-import Card from "./components/cards/Card";
+import Card from "./components/interfaces/Card";
 import "./index.css";
 
 function App() {
-  const userId = 12; // Replace with the ID of the user you want to display
+  const userId = 18; // Replace with the ID of the user you want to display
   const [radialChartData, setRadialChartData] = useState([]);
 
   useEffect(() => {

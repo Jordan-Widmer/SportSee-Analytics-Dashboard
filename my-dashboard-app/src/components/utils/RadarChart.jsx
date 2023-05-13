@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import styles from "./RadarChart.module.css";
+import styles from "../css/RadarChart.module.css";
 import {
   RadarChart,
   PolarGrid,

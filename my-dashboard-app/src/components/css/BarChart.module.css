@@ -1,0 +1,26 @@
+.custom-tooltip {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 7px;
+  line-height: 24px;
+  background: #e60000;
+  text-align: center;
+  padding: 1px;
+  border-radius: 0px;
+  border: none;
+}
+
+.custom-tooltip p {
+  color: #ffffff;
+  margin: 20px;
+}
+
+.label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #74798c;
+}
