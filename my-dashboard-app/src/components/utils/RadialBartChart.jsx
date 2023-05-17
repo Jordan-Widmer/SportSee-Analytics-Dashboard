@@ -4,6 +4,7 @@ import {
   RadialBarChart as RechartsRadialBarChart,
   RadialBar,
   Tooltip,
+  PolarAngleAxis
 } from "recharts";
 import styles from "../css/RadialBartChart.module.css";
 
@@ -22,12 +23,19 @@ const RadialBarChartComponent = ({ data }) => {
           outerRadius={100}
           barSize={20}
         >
+          <PolarAngleAxis 
+            type="number" 
+            domain={[0, 100]} 
+            angleAxisId={0} 
+            tick={false} 
+          />
           <RadialBar
             minAngle={15}
             label={{ position: "insideStart", fill: "#fff" }}
             background
-            clockWise={false}
+            clockWise={true}
             dataKey="value"
+            angleAxisId={0}
             fill="#f00"
           />
           <Tooltip />

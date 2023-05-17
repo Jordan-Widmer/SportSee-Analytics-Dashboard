@@ -1,3 +1,51 @@
+.barchartLegend {
+  padding: 0px 40px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px ;
+}
+
+.barchartLegend h2 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+  color: #20253A;
+}
+
+ul {
+  display: flex;
+  width: 277px ;
+  justify-content: space-between;
+}
+
+li {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #74798c;
+}
+
+li::marker {
+  color: #FBFBFB;
+}
+
+li span {
+  font-size: 10px;
+  margin-right: 10px;
+}
+
+.red {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
 .custom-tooltip {
   font-family: "Roboto";
   font-style: normal;
@@ -14,13 +62,4 @@
 .custom-tooltip p {
   color: #ffffff;
   margin: 20px;
-}
-
-.label {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #74798c;
 }

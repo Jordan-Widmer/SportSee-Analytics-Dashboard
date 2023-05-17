@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import styles from "../css/BarChart.module.css";
 import {
   BarChart,
   Bar,
@@ -9,16 +10,39 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { FaCircle } from "react-icons/fa";
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="custom-tooltip">
-        <p className="label">{`${label}: ${payload[0].value}`}</p>
+      <div className={styles["custom-tooltip"]}>
+        <p className={styles["label"]}>{`${label}: ${payload[0].value}`}</p>
       </div>
     );
   }
   return null;
+};
+
+const renderLegend = (props) => {
+  return (
+    <div className={styles["barchartLegend"]}>
+      <h2>Activité quotidienne</h2>
+      <ul>
+        <li>
+          <span className={styles["black"]}>
+            <FaCircle />
+          </span>
+          Poids (kg)
+        </li>
+        <li>
+          <span className={styles["red"]}>
+            <FaCircle />
+          </span>
+          Calories brûlées (kCal)
+        </li>
+      </ul>
+    </div>
+  );
 };
 
 const BarChartComponent = ({ data }) => {
@@ -36,30 +60,32 @@ const BarChartComponent = ({ data }) => {
   console.log("BarChart data:", data);
 
   return (
-    <div ref={chartRef} style={{ width: "100%", height: 300 }}>
-      <ResponsiveContainer>
-        <BarChart
-          data={data[0].sessions}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          <Bar dataKey="kilogram" name="Poids (kg)" fill="#8884d8" />
-          <Bar
-            dataKey="calories"
-            name="Calories brûlées (kCal)"
-            fill="#82ca9d"
-          />
-        </BarChart>
-      </ResponsiveContainer>
+    <div style={{ display: "flex", flexDirection: "column", width: "863px", height: "320px", background: "#FBFBFB", margin: "auto", marginBottom: "28px", borderRadius: "5px" }}>
+      {renderLegend()}
+      <div ref={chartRef} style={{ width: "100%", height: 300 }}>
+        <ResponsiveContainer>
+          <BarChart
+            data={data[0].sessions}
+            margin={{
+              top: 20,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <XAxis dataKey="day" />
+            <YAxis orientation="right" tickLine={false} />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar dataKey="kilogram" name="Poids (kg)" fill="#282D30" />
+            <Bar
+              dataKey="calories"
+              name="Calories brûlées (kCal)"
+              fill="#E60000"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

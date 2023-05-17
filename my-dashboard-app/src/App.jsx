@@ -11,7 +11,7 @@ import Card from "./components/interfaces/Card";
 import "./index.css";
 
 function App() {
-  const userId = 18; // Replace with the ID of the user you want to display
+  const userId = 12; // Replace with the ID of the user you want to display
   const [radialChartData, setRadialChartData] = useState([]);
 
   useEffect(() => {
@@ -52,24 +52,33 @@ function App() {
       <Header />
       <div className="contentWrapper">
         <Sidebar />
-        <div>
+        <div className="dashboardContent">
+          <div className="profileContainer">
+            <h1>
+              Welcome <span>{firstName} {lastName}</span>
+            </h1>
+            <p>Félicitation ! Vous avez explosé vos objectifs hier👏</p>
+          </div>
           {userActivity ? (
             <BarChartComponent data={Object.values(userActivity)} />
           ) : (
             <p>Loading user activity...</p>
           )}
-          <RadialBarChartComponent data={data} />
-          {userAverageSessions ? (
-            <LineChart data={userAverageSessions} />
-          ) : (
-            <p>Loading average sessions...</p>
-          )}
-          {transformedPerformanceData ? (
-            <PerformanceChart data={transformedPerformanceData} />
-          ) : (
-            <p>Loading performance data...</p>
-          )}
-          <h2>Card</h2>
+          <div className="secChartContainer">
+            {userAverageSessions ? (
+              <LineChart data={userAverageSessions} />
+            ) : (
+              <p>Loading average sessions...</p>
+            )}
+            {transformedPerformanceData ? (
+              <PerformanceChart data={transformedPerformanceData} />
+            ) : (
+              <p>Loading performance data...</p>
+            )}
+            <RadialBarChartComponent data={data} />
+          </div>
+        </div>
+        <div className="cardContainer">
           <Card userId={userId} />
         </div>
       </div>

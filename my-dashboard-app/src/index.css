@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #FFFFFF;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -121,9 +121,44 @@ button:focus-visible {
   width: 100%;
 }
 
-.sidebarContainer {
-  /* ... */
-  /* retirez la propriété 'height' pour que la sidebar s'adapte au contenu */
+.cardContainer {
+  margin-right: 90px;
+  margin-top: 234px;
 }
 
-/* Ajoutez le reste de vos styles ici */
+.secChartContainer {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.dashboardContent {
+  width: 100%;
+}
+
+.profileContainer {
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 34px;
+  margin-bottom: 34px;
+  padding-left: 107px;
+
+}
+
+.profileContainer h1 {
+  font-size: 48px;
+  font-weight: 500;
+}
+
+.profileContainer p {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+span {
+  color: red;
+}
