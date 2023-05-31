@@ -45,6 +45,19 @@ const renderLegend = (props) => {
   );
 };
 
+const CustomBar = (props) => {
+  const { fill, x, y, width, height } = props;
+
+  return (
+    <path
+      d={`M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${
+        height - 6
+      } h${-width}z`}
+      style={{ fill }}
+    />
+  );
+};
+
 const BarChartComponent = ({ data }) => {
   const chartRef = useRef(null);
 
@@ -60,7 +73,18 @@ const BarChartComponent = ({ data }) => {
   console.log("BarChart data:", data);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "863px", height: "320px", background: "#FBFBFB", margin: "auto", marginBottom: "28px", borderRadius: "5px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "863px",
+        height: "320px",
+        background: "#FBFBFB",
+        margin: "auto",
+        marginBottom: "28px",
+        borderRadius: "5px",
+      }}
+    >
       {renderLegend()}
       <div ref={chartRef} style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
@@ -77,11 +101,17 @@ const BarChartComponent = ({ data }) => {
             <XAxis dataKey="day" />
             <YAxis orientation="right" tickLine={false} />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="kilogram" name="Poids (kg)" fill="#282D30" />
+            <Bar
+              dataKey="kilogram"
+              name="Poids (kg)"
+              fill="#282D30"
+              shape={<CustomBar />}
+            />
             <Bar
               dataKey="calories"
               name="Calories brûlées (kCal)"
               fill="#E60000"
+              shape={<CustomBar />}
             />
           </BarChart>
         </ResponsiveContainer>
