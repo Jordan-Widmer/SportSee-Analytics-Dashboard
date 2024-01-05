@@ -162,3 +162,10 @@ button:focus-visible {
 span {
   color: red;
 }
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .dashboardContent {
+    width: 600px;
+  }
+}

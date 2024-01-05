@@ -55,11 +55,11 @@ const PerformanceChart = ({ data }) => {
   return (
     <div ref={chartRef} className={styles.radarchartContainer}>
       <ResponsiveContainer>
-        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={formattedData}>
+        <RadarChart cx="50%" cy="50%" outerRadius="50%" data={formattedData}>
           <PolarGrid stroke="white" radialLines={false} />
           <PolarAngleAxis
             dataKey="kind"
-            tick={{ fill: "white", fontSize: 12 }}
+            tick={{ fill: "white", fontSize: 10 }}
           />
           <PolarRadiusAxis angle={30} domain={[0, "auto"]} tick={false} />
           <Radar

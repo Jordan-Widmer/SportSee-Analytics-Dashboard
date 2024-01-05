@@ -51,7 +51,7 @@ const LineChart = ({ data }) => {
   return (
     <div className={styles.linechartContainer}>
       <h3>Durée moyenne des sessions</h3>
-      <RechartsLineChart width={258} height={180} data={processedData}>
+      <RechartsLineChart width={208} height={180} data={processedData}>
         <XAxis
           tick={{ fill: "white" }}
           padding={{ left: 10, right: 10 }}

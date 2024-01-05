@@ -14,10 +14,10 @@ const RadialBarChartComponent = ({ data }) => {
       <h2>Score</h2>
       {data && data.length > 0 ? (
         <RechartsRadialBarChart
-          width={258}
+          width={208}
           height={263}
           data={data}
-          cx={129}
+          cx={109}
           cy={131}
           innerRadius={80}
           outerRadius={100}

@@ -77,7 +77,7 @@ const BarChartComponent = ({ data }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "863px",
+        width: "100%",
         height: "320px",
         background: "#FBFBFB",
         margin: "auto",

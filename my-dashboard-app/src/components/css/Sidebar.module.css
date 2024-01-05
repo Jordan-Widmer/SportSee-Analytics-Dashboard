@@ -36,3 +36,10 @@
   font-weight: 500;
   font-size: 25px;
 }
+
+/* Responsive styles */
+@media (max-height: 1024px) {
+  .sidebarContainer {
+    height: unset;
+  }
+}
