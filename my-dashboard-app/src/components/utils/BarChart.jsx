@@ -12,7 +12,9 @@ import {
 } from "recharts";
 import { FaCircle } from "react-icons/fa";
 
+// Custom tooltip component for the bar chart
 const CustomTooltip = ({ active, payload, label }) => {
+  // Display tooltip content if active and payload is available
   if (active && payload && payload.length) {
     return (
       <div className={styles["custom-tooltip"]}>
@@ -20,9 +22,10 @@ const CustomTooltip = ({ active, payload, label }) => {
       </div>
     );
   }
-  return null;
+  return null; // Return null if tooltip should not be displayed
 };
 
+// Render function for custom legend
 const renderLegend = (props) => {
   return (
     <div className={styles["barchartLegend"]}>
@@ -45,22 +48,23 @@ const renderLegend = (props) => {
   );
 };
 
+// Custom bar shape for the bar chart
 const CustomBar = (props) => {
   const { fill, x, y, width, height } = props;
-
+  // Creating a custom path for the bar shape
   return (
     <path
-      d={`M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${
-        height - 6
-      } h${-width}z`}
+      d={`M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${height - 6} h${-width}z`}
       style={{ fill }}
     />
   );
 };
 
+// BarChartComponent for displaying a bar chart
 const BarChartComponent = ({ data }) => {
-  const chartRef = useRef(null);
+  const chartRef = useRef(null); // Ref to access the DOM element of the chart
 
+  // Effect hook to log the dimensions of the chart container
   useEffect(() => {
     if (chartRef.current) {
       console.log(
@@ -70,8 +74,10 @@ const BarChartComponent = ({ data }) => {
     }
   }, [chartRef]);
 
+  // Logging the received data
   console.log("BarChart data:", data);
 
+  // Rendering the bar chart with custom configurations
   return (
     <div
       style={{
@@ -85,7 +91,7 @@ const BarChartComponent = ({ data }) => {
         borderRadius: "5px",
       }}
     >
-      {renderLegend()}
+      {renderLegend()} {/* Rendering the custom legend */}
       <div ref={chartRef} style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
           <BarChart
