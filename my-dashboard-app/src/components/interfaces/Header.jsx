@@ -1,21 +1,21 @@
 // Header.js
 import React from "react";
-import styles from "../css/Header.module.css"; // Importing the CSS file for the Header specific style
+import styles from "../css/Header.module.css"; // Importation du fichier CSS pour le style spécifique de l'En-tête
 
-// Header component that will be used for navigation in the application
+// Composant Header qui sera utilisé pour la navigation dans l'application
 const Header = () => {
   return (
-    // Using 'headerContainer' to style the main Header container
+    // Utilisation de 'headerContainer' pour styliser le conteneur principal de l'En-tête
     <header className={styles.headerContainer}>
       <div className={styles.logo}>
-        {/* Integration of the SportSee logo to reinforce brand identity */}
+        {/* Intégration du logo SportSee pour renforcer l'identité de la marque */}
         <img src="../../../SportSee.png" alt="Logo" />
-        {/* The title of the application for immediate visual recognition */}
+        {/* Le titre de l'application pour une reconnaissance visuelle immédiate */}
         <h1>SportSee</h1>
       </div>
-      {/* Main navigation with links to the different pages of the application */}
+      {/* Navigation principale avec des liens vers les différentes pages de l'application */}
       <nav>
-        {/* Each link leads to a different page, making it easier for the user to navigate */}
+        {/* Chaque lien mène à une page différente, facilitant la navigation pour l'utilisateur */}
         <a href="/">Accueil</a>
         <a href="/about">Profil</a>
         <a href="/contact">Réglage</a>
@@ -25,4 +25,4 @@ const Header = () => {
   );
 };
 
-export default Header; // Exporting the Header for use in other components
+export default Header; // Exportation du Header pour utilisation dans d'autres composants

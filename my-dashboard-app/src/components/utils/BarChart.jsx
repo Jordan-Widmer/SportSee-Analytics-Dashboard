@@ -12,20 +12,20 @@ import {
 } from "recharts";
 import { FaCircle } from "react-icons/fa";
 
-// Custom tooltip component for the bar chart
+// Composant personnalisé d'infobulle pour le graphique en barres
 const CustomTooltip = ({ active, payload, label }) => {
-  // Display tooltip content if active and payload is available
+  // Affichage du contenu de l'infobulle si actif et si des données sont disponibles
   if (active && payload && payload.length) {
     return (
       <div className={styles["custom-tooltip"]}>
-        <p className={styles["label"]}>{`${label}: ${payload[0].value}`}</p>
+        <p className={styles["label"]}>{`${label} : ${payload[0].value}`}</p>
       </div>
     );
   }
-  return null; // Return null if tooltip should not be displayed
+  return null; // Retourne null si l'infobulle ne doit pas être affichée
 };
 
-// Render function for custom legend
+// Fonction de rendu pour la légende personnalisée
 const renderLegend = (props) => {
   return (
     <div className={styles["barchartLegend"]}>
@@ -48,10 +48,10 @@ const renderLegend = (props) => {
   );
 };
 
-// Custom bar shape for the bar chart
+// Forme personnalisée de barre pour le graphique en barres
 const CustomBar = (props) => {
   const { fill, x, y, width, height } = props;
-  // Creating a custom path for the bar shape
+  // Création d'un chemin personnalisé pour la forme de la barre
   return (
     <path
       d={`M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${height - 6} h${-width}z`}
@@ -60,24 +60,24 @@ const CustomBar = (props) => {
   );
 };
 
-// BarChartComponent for displaying a bar chart
+// Composant BarChartComponent pour afficher un graphique en barres
 const BarChartComponent = ({ data }) => {
-  const chartRef = useRef(null); // Ref to access the DOM element of the chart
+  const chartRef = useRef(null); // Réf pour accéder à l'élément DOM du graphique
 
-  // Effect hook to log the dimensions of the chart container
+  // Hook d'effet pour enregistrer les dimensions du conteneur du graphique
   useEffect(() => {
     if (chartRef.current) {
       console.log(
-        "BarChart container dimensions:",
+        "Dimensions du conteneur BarChart :",
         chartRef.current.getBoundingClientRect()
       );
     }
   }, [chartRef]);
 
-  // Logging the received data
-  console.log("BarChart data:", data);
+  // Enregistrement des données reçues
+  console.log("Données BarChart :", data);
 
-  // Rendering the bar chart with custom configurations
+  // Rendu du graphique en barres avec des configurations personnalisées
   return (
     <div
       style={{
@@ -91,7 +91,7 @@ const BarChartComponent = ({ data }) => {
         borderRadius: "5px",
       }}
     >
-      {renderLegend()} {/* Rendering the custom legend */}
+      {renderLegend()} {/* Rendu de la légende personnalisée */}
       <div ref={chartRef} style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
           <BarChart

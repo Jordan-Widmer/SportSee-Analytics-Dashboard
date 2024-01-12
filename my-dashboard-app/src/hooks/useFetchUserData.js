@@ -1,7 +1,7 @@
-// Importing React hooks
+// Importation des hooks React
 import { useState, useEffect } from "react";
 
-// Importing API service functions
+// Importation des fonctions de service API
 import {
   getUserInfo,
   getUserActivity,
@@ -10,9 +10,9 @@ import {
   getUserDailyGoalCompletion,
 } from "../services/apiService";
 
-// Custom hook for fetching and managing user data
+// Hook personnalisé pour récupérer et gérer les données de l'utilisateur
 const useFetchUserData = (userId) => {
-  // State hooks for storing different aspects of user data
+  // Hooks d'état pour stocker différents aspects des données de l'utilisateur
   const [userInfo, setUserInfo] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [userAverageSessions, setUserAverageSessions] = useState(null);
@@ -20,42 +20,42 @@ const useFetchUserData = (userId) => {
   const [userDailyGoalCompletion, setUserDailyGoalCompletion] = useState(null);
   const [goalCompletionData, setGoalCompletionData] = useState([]);
 
-  // Effect hook to fetch data when userId changes
+  // Hook d'effet pour récupérer les données lorsque userId change
   useEffect(() => {
-    // Async function to fetch user data from various endpoints
+    // Fonction asynchrone pour récupérer les données utilisateur depuis différents points de terminaison
     const fetchData = async () => {
       try {
-        // Fetching user info and updating state
+        // Récupération des informations de l'utilisateur et mise à jour de l'état
         const userInfoData = await getUserInfo(userId);
         setUserInfo(userInfoData);
 
-        // Fetching user activity data
+        // Récupération des données d'activité de l'utilisateur
         const userActivityData = await getUserActivity(userId);
         setUserActivity(userActivityData);
 
-        // Fetching user average sessions data
+        // Récupération des données des sessions moyennes de l'utilisateur
         const userAverageSessionsData = await getUserAverageSessions(userId);
         setUserAverageSessions(userAverageSessionsData);
 
-        // Fetching user performance data
+        // Récupération des données de performance de l'utilisateur
         const userPerformanceData = await getUserPerformance(userId);
         setUserPerformanceData(userPerformanceData.data);
 
-        // Fetching user daily goal completion data
+        // Récupération des données de réalisation des objectifs quotidiens de l'utilisateur
         const goalCompletionData = await getUserDailyGoalCompletion(userId);
         setGoalCompletionData(goalCompletionData);
       } catch (error) {
-        // Handling errors and setting default state in case of fetch failure
-        console.error("Error fetching user daily goal completion data:", error);
-        setGoalCompletionData([]); // Set data to an empty array in case of error
+        // Gestion des erreurs et définition de l'état par défaut en cas d'échec de la récupération
+        console.error("Erreur lors de la récupération des données de réalisation des objectifs quotidiens de l'utilisateur :", error);
+        setGoalCompletionData([]); // Définition des données à un tableau vide en cas d'erreur
       }
     };
 
-    // Invoking the fetchData function
+    // Invocation de la fonction fetchData
     fetchData();
-  }, [userId]); // Dependency array with userId to re-run effect when userId changes
+  }, [userId]); // Tableau de dépendances avec userId pour réexécuter l'effet lorsque userId change
 
-  // Returning the fetched data so it can be used by components
+  // Retour des données récupérées pour qu'elles puissent être utilisées par les composants
   return {
     userInfo,
     userActivity,
@@ -65,5 +65,5 @@ const useFetchUserData = (userId) => {
   };
 };
 
-// Exporting the custom hook for use in other components
+// Exportation du hook personnalisé pour utilisation dans d'autres composants
 export default useFetchUserData;

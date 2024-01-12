@@ -10,54 +10,54 @@ import {
   Tooltip,
 } from "recharts";
 
-// Custom tooltip component for the radar chart
+// Composant personnalisé pour l'infobulle du graphique radar
 const CustomTooltip = ({ active, payload, label }) => {
-  // Display tooltip content if active and payload is available
+  // Affichage du contenu de l'infobulle si actif et payload disponible
   if (active && payload && payload.length) {
     return (
       <div className={styles.customTooltip}>
-        <p className={styles.label}>{`${label}: ${payload[0].value}`}</p>
+        <p className={styles.label}>{`${label} : ${payload[0].value}`}</p>
       </div>
     );
   }
-  return null; // Return null if tooltip should not be displayed
+  return null; // Retourne null si l'infobulle ne doit pas être affichée
 };
 
-// Mapping kind of performance to its corresponding name
+// Mappage du type de performance à son nom correspondant
 const kind = {
   1: "cardio",
-  2: "energy",
+  2: "énergie",
   3: "endurance",
-  4: "strength",
-  5: "speed",
-  6: "intensity",
+  4: "force",
+  5: "vitesse",
+  6: "intensité",
 };
 
-// Component to render a radar chart for user performance
+// Composant pour afficher un graphique radar de la performance de l'utilisateur
 const PerformanceChart = ({ data }) => {
-  const chartRef = useRef(null); // Ref to access the DOM element of the chart
-  const [formattedData, setFormattedData] = useState([]); // State for formatted chart data
+  const chartRef = useRef(null); // Réf pour accéder à l'élément DOM du graphique
+  const [formattedData, setFormattedData] = useState([]); // État pour les données formatées du graphique
 
-  // Effect to log the dimensions of the chart container
+  // Effet pour enregistrer les dimensions du conteneur du graphique
   useEffect(() => {
     if (chartRef.current) {
       console.log(
-        "Chart container dimensions:",
+        "Dimensions du conteneur du graphique :",
         chartRef.current.getBoundingClientRect()
       );
     }
   }, [chartRef]);
 
-  // Effect to format the data for the radar chart
+  // Effet pour formater les données pour le graphique radar
   useEffect(() => {
     data.map((e, i) => {
       const count = i + 1;
-      e.kind = kind[count]; // Assigning the kind name based on the mapping
+      e.kind = kind[count]; // Assignation du nom du type basé sur le mappage
     });
-    setFormattedData(data); // Updating the state with the formatted data
+    setFormattedData(data); // Mise à jour de l'état avec les données formatées
   }, [data]);
 
-  // Rendering the radar chart
+  // Rendu du graphique radar
   return (
     <div ref={chartRef} className={styles.radarchartContainer}>
       <ResponsiveContainer>
@@ -65,7 +65,7 @@ const PerformanceChart = ({ data }) => {
           <PolarGrid stroke="white" radialLines={false} />
           <PolarAngleAxis dataKey="kind" tick={{ fill: "white", fontSize: 10 }} />
           <PolarRadiusAxis angle={30} domain={[0, "auto"]} tick={false} />
-          <Radar name="User Performance" dataKey="value" fill="rgba(255, 1, 1, 0.7)" />
+          <Radar name="Performance de l'utilisateur" dataKey="value" fill="rgba(255, 1, 1, 0.7)" />
           <Tooltip content={<CustomTooltip />} />
         </RadarChart>
       </ResponsiveContainer>

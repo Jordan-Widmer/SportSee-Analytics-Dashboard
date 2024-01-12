@@ -41,7 +41,7 @@ const RadialBarChartComponent = ({ data }) => {
           <Tooltip />
         </RechartsRadialBarChart>
       ) : (
-        <p>Loading...</p>
+        <p>Chargement...</p>
       )}
       <div className={styles.radialProgressbarData}>
         <h3>{data[0]?.value}%</h3>

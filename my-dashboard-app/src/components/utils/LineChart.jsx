@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import styles from "../css/LineChart.module.css";
 import { LineChart as RechartsLineChart, XAxis, Tooltip, Line } from "recharts";
 
-// LineChart component to render a line chart using Recharts
+// Composant LineChart pour afficher un graphique en ligne avec Recharts
 const LineChart = ({ data }) => {
   const [processedData, setProcessedData] = useState([]);
 
-  // Effect hook to process the data for the line chart
+  // Hook d'effet pour traiter les données pour le graphique en ligne
   useEffect(() => {
     const list = data;
 
-    // Mapping each element to assign a day abbreviation
+    // Mappage de chaque élément pour assigner une abréviation de jour
     list?.map((e, i) => {
       switch (i) {
         case 0:
@@ -36,13 +36,13 @@ const LineChart = ({ data }) => {
           e.day = "D"; // Dimanche
           break;
         default:
-          console.log("données inconnu");
+          console.log("données inconnues");
       }
-      setProcessedData(list); // Updating the state with the processed data
+      setProcessedData(list); // Mise à jour de l'état avec les données traitées
     });
   }, [data]);
 
-  // Custom tooltip component for the line chart
+  // Composant personnalisé d'infobulle pour le graphique en ligne
   const CustomTooltip = ({ active, payload, label }) => {
     const tooltipValue = payload[0]?.value;
     return (
@@ -52,7 +52,7 @@ const LineChart = ({ data }) => {
     );
   };
 
-  // Rendering the line chart
+  // Rendu du graphique en ligne
   return (
     <div className={styles.linechartContainer}>
       <h3>Durée moyenne des sessions</h3>
@@ -81,7 +81,7 @@ const LineChart = ({ data }) => {
   );
 };
 
-// PropType validation for the data prop
+// Validation des PropTypes pour la prop data
 LineChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
