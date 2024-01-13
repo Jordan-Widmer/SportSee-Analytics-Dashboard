@@ -21,14 +21,18 @@ import "./index.css";
 
 function App() {
   // ID utilisateur statique pour la démonstration ; à remplacer par des données dynamiques dans une vraie application
+  // Important : Cette approche est à modifier dans un scénario de production pour s'adapter à des ID utilisateurs dynamiques
   const userId = 12;
 
   // État pour stocker les données du graphique radial
+  // Note : L'utilisation de useState pour la gestion des données de graphique assure une mise à jour efficace du DOM en cas de changement de données
   const [radialChartData, setRadialChartData] = useState([]);
 
   // Hook d'effet pour récupérer les données des tâches de l'utilisateur
+  // Utilisation de useEffect permet de charger les données de manière asynchrone sans bloquer le rendu de l'interface utilisateur
   useEffect(() => {
     // Récupération des tâches pour l'utilisateur spécifié
+    // La méthode fetch est utilisée ici pour la simplicité, mais peut être remplacée par Axios pour plus de fonctionnalités
     fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
       .then((response) => response.json())
       .then((data) => {
@@ -37,6 +41,7 @@ function App() {
         const notCompleted = data.length - completed;
 
         // Définition des données du graphique radial
+        // La mise à jour de l'état déclenchera une nouvelle renderisation avec les données mises à jour
         setRadialChartData([
           { name: "Complétées", completion: completed },
           { name: "Non Complétées", completion: notCompleted },
@@ -46,6 +51,7 @@ function App() {
   }, [userId]); // Tableau de dépendances pour réexécuter l'effet lorsque userId change
 
   // Récupération de données utilisateur supplémentaires en utilisant un hook personnalisé
+  // Ce hook centralise la logique de récupération de données, améliorant la maintenabilité et la réutilisabilité
   const {
     userInfo,
     userActivity,
@@ -55,9 +61,11 @@ function App() {
   } = useFetchUserData(userId);
 
   // Destructuration des informations utilisateur pour un accès facile
+  // Remarque : La déstructuration permet un accès plus direct aux propriétés des objets
   const { firstName, lastName, age } = userInfo?.data?.userInfos || {};
 
   // Transformation des données de performance pour le graphique
+  // Cette transformation est nécessaire pour adapter les données au format requis par le composant graphique
   const transformedPerformanceData = userPerformanceData
     ? userPerformanceData.data.map((item, index) => ({
         name: userPerformanceData.kind.name + (index + 1),
@@ -66,9 +74,11 @@ function App() {
     : null;
 
   // Données statiques à des fins de démonstration
+  // Important : En production, ces données seraient dynamiques et récupérées depuis une source externe
   const data = [{ name: "Objectif", value: 75 }];
 
   // JSX pour afficher l'interface utilisateur de l'application
+  // L'organisation des composants reflète la structure visuelle de l'interface utilisateur
   return (
     <div className="App">
       <Header />
@@ -105,6 +115,7 @@ function App() {
         </div>
         <div className="cardContainer">
           {/* Passage de userId au composant Card */}
+          {/* Cette approche assure que le composant Card reçoit les données correctes basées sur l'ID de l'utilisateur */}
           <Card userId={userId} />
         </div>
       </div>

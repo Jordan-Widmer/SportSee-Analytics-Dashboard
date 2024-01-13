@@ -13,8 +13,8 @@ import {
 import { FaCircle } from "react-icons/fa";
 
 // Composant personnalisé d'infobulle pour le graphique en barres
+// Permet une meilleure compréhension des valeurs lors du survol des barres
 const CustomTooltip = ({ active, payload, label }) => {
-  // Affichage du contenu de l'infobulle si actif et si des données sont disponibles
   if (active && payload && payload.length) {
     return (
       <div className={styles["custom-tooltip"]}>
@@ -22,10 +22,11 @@ const CustomTooltip = ({ active, payload, label }) => {
       </div>
     );
   }
-  return null; // Retourne null si l'infobulle ne doit pas être affichée
+  return null; // Retourne null pour éviter un rendu inutile lorsqu'il n'y a pas de données à afficher
 };
 
 // Fonction de rendu pour la légende personnalisée
+// Permet une identification claire des différentes données représentées sur le graphique
 const renderLegend = (props) => {
   return (
     <div className={styles["barchartLegend"]}>
@@ -49,9 +50,9 @@ const renderLegend = (props) => {
 };
 
 // Forme personnalisée de barre pour le graphique en barres
+// Offre une esthétique unique au graphique pour une meilleure expérience visuelle
 const CustomBar = (props) => {
   const { fill, x, y, width, height } = props;
-  // Création d'un chemin personnalisé pour la forme de la barre
   return (
     <path
       d={`M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${height - 6} h${-width}z`}
@@ -65,6 +66,7 @@ const BarChartComponent = ({ data }) => {
   const chartRef = useRef(null); // Réf pour accéder à l'élément DOM du graphique
 
   // Hook d'effet pour enregistrer les dimensions du conteneur du graphique
+  // Utile pour des adaptations dynamiques ou des vérifications en phase de développement
   useEffect(() => {
     if (chartRef.current) {
       console.log(
@@ -74,10 +76,11 @@ const BarChartComponent = ({ data }) => {
     }
   }, [chartRef]);
 
-  // Enregistrement des données reçues
+  // Enregistrement des données reçues pour le suivi et le débogage
   console.log("Données BarChart :", data);
 
   // Rendu du graphique en barres avec des configurations personnalisées
+  // La configuration reflète les besoins spécifiques en matière de visualisation des données
   return (
     <div
       style={{

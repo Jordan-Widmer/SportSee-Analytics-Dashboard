@@ -1,17 +1,16 @@
 import axios from "axios";
+import DataFormatter from "./DataFormatter"; // Importation de la classe de formatage des données
 
-// URL de base pour l'API. Remplacez par l'URL de votre backend.
-const apiURL = "http://localhost:3000";
+const apiURL = "http://localhost:3000"; // URL de base pour les requêtes API
 
-// Fonction pour récupérer les informations de l'utilisateur
+// Récupère les informations de l'utilisateur depuis l'API
 export const getUserInfo = async (userId) => {
   try {
-    // Envoi d'une requête GET à l'API pour récupérer les informations de l'utilisateur
+    // Envoie une requête GET pour obtenir les infos de l'utilisateur
     const response = await axios.get(`${apiURL}/user/${userId}`);
-    // Retour des données récupérées
-    return response.data;
+    return response.data; // Retourne les données de l'utilisateur
   } catch (error) {
-    // Gestion des erreurs, en particulier si l'utilisateur n'est pas trouvé
+    // Gestion des erreurs, notamment si l'utilisateur n'est pas trouvé
     if (error.response && error.response.status === 404) {
       console.error("Utilisateur non trouvé");
       return null;
@@ -22,86 +21,44 @@ export const getUserInfo = async (userId) => {
   }
 };
 
-// Fonction pour récupérer les données clés d'un utilisateur
+// Récupère les données clés de l'utilisateur
 export const getUserKeyData = async (userId) => {
-  // Utilisation de la fonction getUserInfo pour obtenir les données clés de l'utilisateur
-  const userInfo = await getUserInfo(userId);
+  const userInfo = await getUserInfo(userId); // Utilise getUserInfo pour obtenir les informations
   console.log("userInfo :", userInfo);
-  // Retour de la partie des données clés des informations de l'utilisateur
-  return userInfo.data.keyData;
+  return userInfo.data.keyData; // Retourne uniquement les données clés de l'utilisateur
 };
 
-// Fonction pour récupérer les données d'activité de l'utilisateur
+// Récupère les données d'activité de l'utilisateur
 export const getUserActivity = async (userId) => {
-  // Récupération des données d'activité de l'utilisateur avec une requête GET
   const response = await axios.get(`${apiURL}/user/${userId}/activity`);
-  return response.data;
+  return response.data; // Retourne les données d'activité de l'utilisateur
 };
 
-// Fonction pour récupérer la durée moyenne des sessions d'un utilisateur
+// Récupère et formate la durée moyenne des sessions de l'utilisateur
 export async function getUserAverageSessions(userId) {
   try {
-    // Récupération des données de session moyenne
-    const response = await axios.get(
-      `${apiURL}/user/${userId}/average-sessions`
-    );
-    console.log("réponse :", response);
-    const sessionsData = response.data.sessions;
-    console.log("sessionsData :", sessionsData);
-
-    // Validation et transformation des données récupérées
-    if (!sessionsData || !Array.isArray(sessionsData)) {
-      console.error(
-        "Erreur lors de la récupération des sessions moyennes de l'utilisateur : données de sessions manquantes"
-      );
-      return [];
-    }
-
-    // Mappage des données dans un format adapté pour les graphiques
-    const data = sessionsData.map((session) => ({
-      name: `Jour ${session.day}`,
-      value: session.sessionLength,
-    }));
-
-    return data;
+    const response = await axios.get(`${apiURL}/user/${userId}/average-sessions`);
+    // Utilise DataFormatter pour formater les données de session
+    return DataFormatter.formatSessionsData(response.data.sessions);
   } catch (error) {
-    // Gestion des erreurs et retour d'un tableau vide en cas d'échec
     console.error("Erreur lors de la récupération des sessions moyennes de l'utilisateur :", error);
     return [];
   }
 }
 
-// Fonction pour récupérer les données de performance de l'utilisateur
+// Récupère les données de performance de l'utilisateur
 export const getUserPerformance = async (userId) => {
-  // Récupération des données de performance de l'utilisateur
   const response = await axios.get(`${apiURL}/user/${userId}/performance`);
-  return response.data;
+  return response.data; // Retourne les données de performance
 };
 
-// Fonction pour récupérer les données de réalisation des objectifs quotidiens de l'utilisateur
+// Récupère et formate les données de réalisation des objectifs quotidiens de l'utilisateur
 export const getUserDailyGoalCompletion = async (userId) => {
   try {
-    // Récupération des données de réalisation des objectifs quotidiens
-    const response = await axios.get(
-      `${apiURL}/user/${userId}/daily-goal-completion`
-    );
-    const dailyGoals = response.data.data.dailyGoals;
-
-    console.log("Objectifs quotidiens récupérés :", dailyGoals);
-
-    // Formatage des données récupérées pour une consommation plus facile
-    const formattedData = dailyGoals.map((goal, index) => {
-      const formattedGoal = {
-        name: `Jour ${index + 1}`,
-        value: goal.goalCompleted ? 100 : 0,
-      };
-      console.log("Objectif formaté :", formattedGoal);
-      return formattedGoal;
-    });
-
-    return formattedData;
+    const response = await axios.get(`${apiURL}/user/${userId}/daily-goal-completion`);
+    // Utilise DataFormatter pour formater les données des objectifs quotidiens
+    return DataFormatter.formatDailyGoalsData(response.data.data.dailyGoals);
   } catch (error) {
-    // Gestion des erreurs et retour de null en cas d'échec
     console.error("Erreur lors de la récupération des données de réalisation des objectifs quotidiens de l'utilisateur :", error);
     return null;
   }
