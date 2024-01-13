@@ -51,6 +51,66 @@ class DataFormatter {
       // Ajoutez ici d'autres transformations si nécessaire
     };
   }
+
+  // Nouvelle méthode pour formater les données des sessions moyennes
+  static formatAverageSessionsData(sessions) {
+    if (!sessions || !Array.isArray(sessions)) {
+      console.error("Invalid average sessions data");
+      return [];
+    }
+
+    return sessions.map((session, index) => {
+      let day;
+      switch (index) {
+        case 0:
+          day = "L"; // Lundi
+          break;
+        case 1:
+          day = "M"; // Mardi
+          break;
+        case 2:
+          day = "M"; // Mercredi
+          break;
+        case 3:
+          day = "J"; // Jeudi
+          break;
+        case 4:
+          day = "V"; // Vendredi
+          break;
+        case 5:
+          day = "S"; // Samedi
+          break;
+        case 6:
+          day = "D"; // Dimanche
+          break;
+        default:
+          console.log("Données inconnues");
+      }
+      return { ...session, day };
+    });
+  }
+
+  // Méthode pour formater les données de performance pour le graphique radar
+  // Méthode pour formater les données de performance pour le graphique radar
+  static formatPerformanceData(performanceData) {
+    const kind = {
+      0: "cardio",
+      1: "énergie",
+      2: "endurance",
+      3: "force",
+      4: "vitesse",
+      5: "intensité",
+    };
+    if (!performanceData || !Array.isArray(performanceData)) {
+      console.error("Invalid performance data");
+      return [];
+    }
+
+    return performanceData.map((data, index) => ({
+      ...data,
+      kind: kind[index] || "Inconnu",
+    }));
+  }
 }
 
 export default DataFormatter;

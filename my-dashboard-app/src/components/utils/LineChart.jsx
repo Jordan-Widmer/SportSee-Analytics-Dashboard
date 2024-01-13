@@ -2,51 +2,18 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "../css/LineChart.module.css";
 import { LineChart as RechartsLineChart, XAxis, Tooltip, Line } from "recharts";
+import DataFormatter from "../../services/DataFormatter"; // Assurez-vous que le chemin d'accès est correct
 
 // Composant LineChart pour afficher un graphique en ligne avec Recharts
-// Utilisation de Recharts pour une intégration facile et des graphiques réactifs
 const LineChart = ({ data }) => {
   const [processedData, setProcessedData] = useState([]);
 
-  // Hook d'effet pour traiter les données pour le graphique en ligne
-  // Transformation des données pour les adapter au format attendu par le composant graphique
+  // Utilisation de DataFormatter pour traiter les données pour le graphique en ligne
   useEffect(() => {
-    const list = data;
-
-    // Mappage de chaque élément pour assigner une abréviation de jour
-    // La transformation est nécessaire pour l'affichage des étiquettes sur l'axe des X
-    list?.map((e, i) => {
-      switch (i) {
-        case 0:
-          e.day = "L"; // Lundi
-          break;
-        case 1:
-          e.day = "M"; // Mardi
-          break;
-        case 2:
-          e.day = "M"; // Mercredi
-          break;
-        case 3:
-          e.day = "J"; // Jeudi
-          break;
-        case 4:
-          e.day = "V"; // Vendredi
-          break;
-        case 5:
-          e.day = "S"; // Samedi
-          break;
-        case 6:
-          e.day = "D"; // Dimanche
-          break;
-        default:
-          console.log("données inconnues");
-      }
-      setProcessedData(list); // Mise à jour de l'état avec les données traitées
-    });
+    setProcessedData(DataFormatter.formatAverageSessionsData(data));
   }, [data]);
 
   // Composant personnalisé d'infobulle pour le graphique en ligne
-  // Fournit des informations contextuelles lors du survol des points de données
   const CustomTooltip = ({ active, payload, label }) => {
     const tooltipValue = payload[0]?.value;
     return (
@@ -57,7 +24,6 @@ const LineChart = ({ data }) => {
   };
 
   // Rendu du graphique en ligne
-  // Configuration visuelle et réactive pour une intégration esthétique dans l'interface utilisateur
   return (
     <div className={styles.linechartContainer}>
       <h3>Durée moyenne des sessions</h3>
@@ -86,12 +52,12 @@ const LineChart = ({ data }) => {
   );
 };
 
-// Validation des PropTypes pour la prop data
-// Assure que le composant reçoit les bonnes données, une étape importante pour éviter les erreurs à l'exécution
+// Validation des PropTypes
 LineChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.number,
+      day: PropTypes.string
     })
   ),
 };

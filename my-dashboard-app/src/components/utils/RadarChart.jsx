@@ -9,11 +9,10 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import DataFormatter from "../../services/DataFormatter"; // Assurez-vous que le chemin d'accès est correct
 
 // Composant personnalisé pour l'infobulle du graphique radar
 const CustomTooltip = ({ active, payload, label }) => {
-  // Affichage du contenu de l'infobulle si actif et payload disponible
-  // Ceci permet d'offrir un contexte interactif pour l'utilisateur lorsqu'il survole le graphique
   if (active && payload && payload.length) {
     return (
       <div className={styles.customTooltip}>
@@ -21,30 +20,14 @@ const CustomTooltip = ({ active, payload, label }) => {
       </div>
     );
   }
-  return null; // Retourne null si l'infobulle ne doit pas être affichée, évitant ainsi des rendus inutiles
-};
-
-// Mappage du type de performance à son nom correspondant
-// Ce mappage permet de transformer des données numériques en labels compréhensibles
-const kind = {
-  1: "cardio",
-  2: "énergie",
-  3: "endurance",
-  4: "force",
-  5: "vitesse",
-  6: "intensité",
+  return null;
 };
 
 // Composant pour afficher un graphique radar de la performance de l'utilisateur
 const PerformanceChart = ({ data }) => {
-  const chartRef = useRef(null); // Réf pour accéder à l'élément DOM du graphique
-  // L'utilisation de useRef est essentielle pour accéder aux propriétés DOM sans re-render
+  const chartRef = useRef(null);
+  const [formattedData, setFormattedData] = useState([]);
 
-  const [formattedData, setFormattedData] = useState([]); // État pour les données formatées du graphique
-  // L'utilisation de useState assure que le graphique se met à jour avec les données les plus récentes
-
-  // Effet pour enregistrer les dimensions du conteneur du graphique
-  // Utile pour le débogage ou des ajustements de style dynamique
   useEffect(() => {
     if (chartRef.current) {
       console.log(
@@ -54,18 +37,13 @@ const PerformanceChart = ({ data }) => {
     }
   }, [chartRef]);
 
-  // Effet pour formater les données pour le graphique radar
-  // Cette étape est cruciale pour s'assurer que les données sont dans le bon format pour le graphique
   useEffect(() => {
-    data.map((e, i) => {
-      const count = i + 1;
-      e.kind = kind[count]; // Assignation du nom du type basé sur le mappage
-    });
-    setFormattedData(data); // Mise à jour de l'état avec les données formatées
+    console.log("Données avant le formatage :", data); // Ajout du log pour les données avant le formatage
+    const formatted = DataFormatter.formatPerformanceData(data);
+    console.log("Données après le formatage :", formatted); // Ajout du log pour les données après le formatage
+    setFormattedData(formatted);
   }, [data]);
 
-  // Rendu du graphique radar
-  // Le composant ResponsiveContainer assure que le graphique s'adapte à la taille de son conteneur
   return (
     <div ref={chartRef} className={styles.radarchartContainer}>
       <ResponsiveContainer>
