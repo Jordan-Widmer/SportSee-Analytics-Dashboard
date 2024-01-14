@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import styles from "../css/BarChart.module.css";
 import {
   BarChart,
@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import { FaCircle } from "react-icons/fa";
@@ -61,23 +60,12 @@ const CustomBar = (props) => {
   );
 };
 
+
 // Composant BarChartComponent pour afficher un graphique en barres
 const BarChartComponent = ({ data }) => {
-  const chartRef = useRef(null); // Réf pour accéder à l'élément DOM du graphique
 
-  // Hook d'effet pour enregistrer les dimensions du conteneur du graphique
-  // Utile pour des adaptations dynamiques ou des vérifications en phase de développement
-  useEffect(() => {
-    if (chartRef.current) {
-      console.log(
-        "Dimensions du conteneur BarChart :",
-        chartRef.current.getBoundingClientRect()
-      );
-    }
-  }, [chartRef]);
 
-  // Enregistrement des données reçues pour le suivi et le débogage
-  console.log("Données BarChart :", data);
+
 
   // Rendu du graphique en barres avec des configurations personnalisées
   // La configuration reflète les besoins spécifiques en matière de visualisation des données
@@ -95,7 +83,7 @@ const BarChartComponent = ({ data }) => {
       }}
     >
       {renderLegend()} {/* Rendu de la légende personnalisée */}
-      <div ref={chartRef} style={{ width: "100%", height: 300 }}>
+      <div style={{ width: "100%", height: 300 }}>
         <ResponsiveContainer>
           <BarChart
             data={data[0].sessions}

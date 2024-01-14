@@ -5,7 +5,7 @@ import { FaAppleAlt, FaHamburger } from "react-icons/fa";
 import { GoFlame } from "react-icons/go";
 import { GiChickenLeg } from "react-icons/gi";
 // Service API pour récupérer les données de l'utilisateur.
-import { getUserKeyData } from "../../services/apiService";
+import { getUserKeyData } from "../../services";
 // Styles spécifiques au composant utilisant les modules CSS.
 import styles from "../css/Card.module.css";
 
@@ -43,16 +43,10 @@ DataCard.propTypes = {
 const Cards = ({ userId }) => {
   // État pour stocker les données de l'utilisateur, initialisé à null en attendant le chargement des données.
   const [data, setData] = useState(null);
-
   // Hook d'effet pour déclencher la récupération des données lorsque le composant est monté et à chaque changement de userId.
   useEffect(() => {
     const fetchData = async () => {
-      // Récupération asynchrone des données clés de l'utilisateur.
-      const keyData = await getUserKeyData(userId);
-      // Debug : Affichage des données récupérées dans la console.
-      console.log("Données clés :", keyData);
-      // Mise à jour du statut avec les nouvelles données.
-      setData(keyData);
+      setData(await getUserKeyData(userId));
     };
     fetchData();
   }, [userId]);

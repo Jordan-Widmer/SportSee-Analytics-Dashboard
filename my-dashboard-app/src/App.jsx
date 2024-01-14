@@ -57,21 +57,11 @@ function App() {
     userActivity,
     userAverageSessions,
     userPerformanceData,
-    goalCompletionData,
   } = useFetchUserData(userId);
 
   // Destructuration des informations utilisateur pour un accès facile
   // Remarque : La déstructuration permet un accès plus direct aux propriétés des objets
-  const { firstName, lastName, age } = userInfo?.data?.userInfos || {};
-
-  // Transformation des données de performance pour le graphique
-  // Cette transformation est nécessaire pour adapter les données au format requis par le composant graphique
-  const transformedPerformanceData = userPerformanceData
-    ? userPerformanceData.data.map((item, index) => ({
-        name: userPerformanceData.kind.name + (index + 1),
-        value: item.value,
-      }))
-    : null;
+  const { firstName, lastName } = userInfo
 
   // Données statiques à des fins de démonstration
   // Important : En production, ces données seraient dynamiques et récupérées depuis une source externe
@@ -105,8 +95,8 @@ function App() {
               <p>Chargement des sessions moyennes...</p>
             )}
             {/* Affichage du graphique de performance avec les données transformées ou message de chargement */}
-            {transformedPerformanceData ? (
-              <PerformanceChart data={transformedPerformanceData} />
+            {userPerformanceData ? (
+              <PerformanceChart data={userPerformanceData} />
             ) : (
               <p>Chargement des données de performance...</p>
             )}

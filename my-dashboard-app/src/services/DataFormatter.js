@@ -16,7 +16,6 @@ class DataFormatter {
   // Transforme les objectifs quotidiens en un format plus lisible
   static formatDailyGoalsData(dailyGoals) {
     if (!dailyGoals || !Array.isArray(dailyGoals)) {
-      console.error("Invalid daily goals data");
       return [];
     }
     return dailyGoals.map((goal, index) => ({
@@ -29,7 +28,6 @@ class DataFormatter {
   // Adapte les données de performance pour une utilisation dans des graphiques ou des visualisations
   static formatUserPerformance(performanceData) {
     if (!performanceData || !performanceData.data || !performanceData.kind) {
-      console.error("Invalid performance data");
       return [];
     }
     return performanceData.data.map((item, index) => ({
@@ -42,7 +40,6 @@ class DataFormatter {
   // Crée un objet utilisateur avec des propriétés supplémentaires ou modifiées pour une utilisation pratique
   static formatUserInfo(userInfo) {
     if (!userInfo) {
-      console.error("Invalid user info data");
       return null;
     }
     return {
@@ -55,7 +52,6 @@ class DataFormatter {
   // Nouvelle méthode pour formater les données des sessions moyennes
   static formatAverageSessionsData(sessions) {
     if (!sessions || !Array.isArray(sessions)) {
-      console.error("Invalid average sessions data");
       return [];
     }
 
@@ -110,6 +106,13 @@ class DataFormatter {
       ...data,
       kind: kind[index] || "Inconnu",
     }));
+  }
+
+  static userPerformances({ data, kind }) {
+    return data.map((item, index) => {
+      const kindName = kind[item.kind] || `Type ${index + 1}`;
+      return { name: kindName, value: item.value };
+    });
   }
 }
 
